@@ -38,21 +38,51 @@ if __name__ == "__main__":
     asyncio.run(bot.start("YOUR_TOKEN"))
 ```
 
-## Advanced Usage: Cogs and Sub-commands
+## Advanced Usage: Plugins and Cogs
+
+`aiko_api` features a powerful plugin system with built-in hot-reloading. It automatically detects and registers Cogs and standalone commands in a directory.
+
+### 1. Create a Plugin (`plugins/moderation.py`)
 
 ```python
 from aiko_api import Cog, command
 
 class Moderation(Cog):
+    # Root Command (No 'self' needed!)
     @command()
-    async def config(self, ctx):
+    async def config(ctx):
         await ctx.send("Main config menu.")
 
+    # Sub-command: !config prefix
     @config
-    async def prefix(self, ctx, new_prefix: str):
+    async def prefix(ctx, new_prefix: str):
         await ctx.send(f"Prefix updated to {new_prefix}")
 
-bot.add_cog(Moderation(bot))
+    # Deep Nesting: !config prefix reset
+    @prefix
+    async def reset(ctx):
+        await ctx.send("Prefix reset to default.")
+```
+
+### 2. Load and Hot-Reload
+
+```python
+import asyncio
+from aiko_api import Bot
+
+async def main():
+    bot = Bot(command_prefix="!")
+    
+    # Automatically load all Cogs and commands from a directory
+    bot.load_plugins("plugins")
+    
+    # Start the hot-reloader in the background
+    asyncio.create_task(bot.watch_plugins("plugins"))
+
+    await bot.start("YOUR_TOKEN")
+
+if __name__ == "__main__":
+    asyncio.run(main())
 ```
 
 ## License
