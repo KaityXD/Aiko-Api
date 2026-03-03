@@ -20,6 +20,7 @@ Some examples also require a `"YOUR_CHANNEL_ID_HERE"`.
 - `smart_cogs_example.py`: Shows how to use the optional `self` parameters (Smart Signatures) and the clean `@cog.event` syntax for Cogs.
 - `command_args_example.py`: Highlights automatic type conversion (int, bool) and keyword-only argument parsing for commands.
 - `plugin_system_example.py`: Demonstrates the advanced plugin loader that can automatically register both Cogs and standalone functions from a directory, including hot-reloading.
+- `selfbot_rpc.py`: Demonstrates how to spoof a detailed "Rich Presence" activity (like VALORANT) on a user account, including images and timestamps.
 
 ### Actions
 - `message_actions.py`: Demonstrates sending, replying to, editing, deleting messages, and adding reactions.
